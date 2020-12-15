@@ -1,0 +1,25 @@
+modules:
+ # --------------------- SERVER MODULE ------------------------
+ - name: demo-srv
+ # ------------------------------------------------------------
+   type: nodejs
+   path: gen/srv
+   properties:
+     EXIT: 1  # required by deploy.js task to terminate 
+   requires:
+     - name: demo-destination
+     - name: demo-uaa
+
+
+resources:
+ - name: demo-destination
+   type: org.cloudfoundry.existing-service
+   parameters:
+     service-name: demo-destination
+
+ - name: demo-uaa
+   type: org.cloudfoundry.managed-service
+   parameters:
+     path: ./xs-security.json
+     service: xsuaa
+     service-plan: application  
